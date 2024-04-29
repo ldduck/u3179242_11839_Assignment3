@@ -3,9 +3,6 @@
 
 
 
-
-
-
 body{
     display: flex;
     justify-content: center;
@@ -14,7 +11,13 @@ body{
     height: 100vh;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #a1a1a1;
+}
+h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
 }
 
 /* container ids and styling */
@@ -22,7 +25,7 @@ body{
     background-color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    padding: 20px;
+    padding: 20vh;
 
     text-align: center;
 }
@@ -35,16 +38,16 @@ body{
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    
 }
 button{
     background-color: #4CAF50;
     border: none;
     color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 30px 60px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 24px;
 } 
 button:hover{
     background-color: #45a049;
@@ -60,9 +63,10 @@ button:disabled{
 /* output text styling */
 .outputText{
     margin-top: 20px;
+    margin-bottom: 20px;
     min-height: 100px;
     background-color: #f5f5f5;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 18px;
 }
