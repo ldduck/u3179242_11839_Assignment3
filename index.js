@@ -38,5 +38,33 @@ function speakText() {
 };
 
 //explore the parameters of what this can do. (e.g. how long can a user pause before the script stops listening)
-//feign intelligence by showing variations of the same answer. (e.g. change background colour to red/green/blue)
 //Investigate Speech.Sythesis function for TTS return
+
+// This changes the background color of the page based on the user's voice input.
+recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    outputDiv.textContent = transcript;
+    
+    // Else if statement changes the colour if the transcript includes a colour name.
+    if (transcript.includes('red')) {
+        document.body.style.backgroundColor = 'red';
+    } else if (transcript.includes('green')) {
+        document.body.style.backgroundColor = 'green';
+    } else if (transcript.includes('blue')) {
+        document.body.style.backgroundColor = 'blue';
+    } else if (transcript.includes('yellow')) {
+        document.body.style.backgroundColor = 'yellow';
+    } else if (transcript.includes('orange')) {
+        document.body.style.backgroundColor = 'orange';
+    } else if (transcript.includes('purple')) {
+        document.body.style.backgroundColor = 'purple';
+    } else if (transcript.includes('pink')) {
+        document.body.style.backgroundColor = 'pink';
+    } else if (transcript.includes('black')) {
+        document.body.style.backgroundColor = 'black';
+    } else if (transcript.includes('white')) {
+        document.body.style.backgroundColor = 'white';
+    } else if (transcript.includes('gray')) {
+        document.body.style.backgroundColor = 'gray';
+    }
+};
