@@ -37,8 +37,6 @@ function speakText() {
     speechSynthesis.speak(utterance);
 };
 
-//explore the parameters of what this can do. (e.g. how long can a user pause before the script stops listening)
-//Investigate Speech.Sythesis function for TTS return
 
 // This changes the background color of the page based on the user's voice input.
 recognition.onresult = (event) => {
@@ -68,3 +66,4 @@ recognition.onresult = (event) => {
         document.body.style.backgroundColor = 'gray';
     }
 };
+
