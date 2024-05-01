@@ -10,7 +10,7 @@ recognition.lang = 'en-AU';
 const speakButton = document.getElementById('speakButton');
 speakButton.addEventListener('click', speakText);
 
-// This will allow the user to speak into their microphone and have the text translation returned on screen.
+// This will allow the user to speak into their microphone and have the text translation displayed on screen.
 recognition.onstart = () => {
     StartButton.textContent = 'Listening...';
 };
@@ -29,41 +29,107 @@ StartButton.addEventListener ('click', () => {
     recognition.start();
 });
 
-// This function will allow the text to be spoken back to the user. Additionally, it controls what the voice sounds like.
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// This allows the text to be spoken back to the user. Additionally, it controls what the voice sounds like.
 function speakText() {
     const text = outputDiv.textContent;
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.pitch = 1;
-    speechSynthesis.speak(utterance);
-};
-
-
+    utterance.pitch = 0.1;
+    window.speechSynthesis.speak(utterance);
+}
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // This changes the background color of the page based on the user's voice input.
 recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
     outputDiv.textContent = transcript;
     
-    // Else if statement changes the colour if the transcript includes a colour name.
-    if (transcript.includes('red')) {
-        document.body.style.backgroundColor = 'red';
-    } else if (transcript.includes('green')) {
-        document.body.style.backgroundColor = 'green';
-    } else if (transcript.includes('blue')) {
-        document.body.style.backgroundColor = 'blue';
-    } else if (transcript.includes('yellow')) {
-        document.body.style.backgroundColor = 'yellow';
-    } else if (transcript.includes('orange')) {
-        document.body.style.backgroundColor = 'orange';
-    } else if (transcript.includes('purple')) {
-        document.body.style.backgroundColor = 'purple';
-    } else if (transcript.includes('pink')) {
-        document.body.style.backgroundColor = 'pink';
-    } else if (transcript.includes('black')) {
-        document.body.style.backgroundColor = 'black';
-    } else if (transcript.includes('white')) {
-        document.body.style.backgroundColor = 'white';
-    } else if (transcript.includes('gray')) {
-        document.body.style.backgroundColor = 'gray';
+    // Array of color names
+    const colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'black', 'white', 'grey'];
+    
+    // This checks if the translated text includes any color name from the array
+    for (const color of colors) {
+        if (transcript.includes(color)) {
+            document.body.style.backgroundColor = color;
+            break;
+        }
     }
 };
 
+// This changes the size and compactness of the webpage when the user says "minimise".
+recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    outputDiv.textContent = transcript;
+    
+    // Array of color names
+    const colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'black', 'white', 'grey'];
+    
+    // This checks if the translated text includes any color name from the array
+    for (const color of colors) {
+        if (transcript.includes(color)) {
+            document.body.style.backgroundColor = color;
+            break;
+        }
+    }
+    
+    // Check if the translated text includes "minimise"
+    if (transcript.includes("minimise") || transcript.includes("compact") || transcript.includes("reduce") || transcript.includes("shrink") || transcript.includes("Compact") || transcript.includes("Minimize") || transcript.includes("Reduce") || transcript.includes("Shrink")) {
+        // Add code here to style the webpage to be smaller and more compact
+        // For example, you can modify the CSS properties of elements to reduce their size and spacing
+        // You can also hide or collapse certain elements to make the page more compact
+        
+        // Example: Reduce font size of all elements
+        const elements = document.querySelectorAll('*');
+        elements.forEach(element => {
+            element.style.fontSize = '12px';
+        });
+        
+        // Example: Reduce padding and margin of specific elements
+        const specificElements = document.querySelectorAll('.specific-class');
+        specificElements.forEach(element => {
+            element.style.padding = '4px';
+            element.style.margin = '2px';
+        });
+        
+        // Example: Hide specific elements
+        const hideElements = document.querySelectorAll('.hide-class');
+        hideElements.forEach(element => {
+            element.style.display = 'none';
+        });
+    }
+    // Check if the translated text includes "maximise", "default", or "reset"
+    if (transcript.includes("maximise") || transcript.includes("default") || transcript.includes("reset") || transcript.includes("restore") || transcript.includes("normal") || transcript.includes("original") || transcript.includes("Maximise") || transcript.includes("Default") || transcript.includes("Reset") || transcript.includes("Restore") || transcript.includes("Normal") || transcript.includes("Original")) {
+        // Add code here to restore the CSS properties to their default values
+        // You can reset the font size, padding, margin, and display properties of elements
+        
+        // Example: Restore font size of all elements to default
+        const elements = document.querySelectorAll('*');
+        elements.forEach(element => {
+            element.style.fontSize = '';
+        });
+
+        // Example: Restore padding and margin of specific elements to default
+        const specificElements = document.querySelectorAll('.specific-class');
+        specificElements.forEach(element => {
+            element.style.padding = '';
+            element.style.margin = '';
+        });
+
+        // Example: Show hidden elements
+        const hideElements = document.querySelectorAll('.hide-class');
+        hideElements.forEach(element => {
+            element.style.display = '';
+        });
+    }
+};
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// figure out how to make the page more compact using voice commands
+// figure out how to reset the page to default using voice commands
+// figure out how to change the text size of the page using voice commands
+// figure out how to change the font of the page using voice commands
+
+// try changing the position of the ui elements using voice commands
+// try changing the color of the ui elements using voice commands
+// try changing the size of the ui elements using voice commands
