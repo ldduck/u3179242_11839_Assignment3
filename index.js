@@ -1,4 +1,4 @@
-//alert("hello") // Ignore this, it was used to test the connection between the HTML and JS files.
+
 
 // This allows the user to speak into their microphone and have the text translation returned on screen.
 const StartButton = document.getElementById('StartButton');
@@ -37,6 +37,7 @@ function speakText() {
     utterance.pitch = 0.1;
     window.speechSynthesis.speak(utterance);
 }
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // This changes the background color of the page based on the user's voice input.
 recognition.onresult = (event) => {
@@ -55,81 +56,91 @@ recognition.onresult = (event) => {
     }
 };
 
-// This changes the size and compactness of the webpage when the user says "minimise".
-recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    outputDiv.textContent = transcript;
-    
-    // Array of color names
-    const colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'black', 'white', 'grey'];
-    
-    // This checks if the translated text includes any color name from the array
-    for (const color of colors) {
-        if (transcript.includes(color)) {
-            document.body.style.backgroundColor = color;
-            break;
-        }
-    }
-    
-    // Check if the translated text includes "minimise"
-    if (transcript.includes("minimise") || transcript.includes("compact") || transcript.includes("reduce") || transcript.includes("shrink") || transcript.includes("Compact") || transcript.includes("Minimize") || transcript.includes("Reduce") || transcript.includes("Shrink")) {
-        // Add code here to style the webpage to be smaller and more compact
-        // For example, you can modify the CSS properties of elements to reduce their size and spacing
-        // You can also hide or collapse certain elements to make the page more compact
-        
-        // Example: Reduce font size of all elements
-        const elements = document.querySelectorAll('*');
-        elements.forEach(element => {
-            element.style.fontSize = '12px';
-        });
-        
-        // Example: Reduce padding and margin of specific elements
-        const specificElements = document.querySelectorAll('.specific-class');
-        specificElements.forEach(element => {
-            element.style.padding = '4px';
-            element.style.margin = '2px';
-        });
-        
-        // Example: Hide specific elements
-        const hideElements = document.querySelectorAll('.hide-class');
-        hideElements.forEach(element => {
+// This section allows the user to change the styling to a smaller version and back. Specifically, checking for certain words to then change.
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        outputDiv.textContent = transcript;
+        // List of words that will trigger the page to be minimised.
+        if (transcript.includes("minimise") || transcript.includes("decrease") || transcript.includes("compact") || transcript.includes("reduce") || transcript.includes("shrink") || transcript.includes("Compact") || transcript.includes("Minimise") || transcript.includes("Reduce") || transcript.includes("Decrease") || transcript.includes("Shrink")) {
+            
+            // Reduces the size of relevant elements on the page.
+            const containerElements = document.querySelectorAll('.container');
+            containerElements.forEach(element => {
+                element.style.padding = '5vh';
+                element.style.borderRadius = '20px';
+            });
+            const titleElements = document.querySelectorAll('.title');
+            titleElements.forEach(element => {
+                element.style.fontSize = '18px';
+                element.style.marginBottom = '10';
+            });
+            const buttonElements = document.querySelectorAll('.buttons');
+            buttonElements.forEach(element => {
+                element.style.fontSize = '12px';
+                element.style.padding = '15px 30px';
+            });
+            const outputElements = document.querySelectorAll('.outputText');
+            outputElements.forEach(element => {
+                element.style.fontSize = '12px';
+                element.style.minHeight = '50px';
+                element.style.borderRadius = '2.5px';
+                element.style.fontSize = '10px';
+            });
+            // Hides unwanted elements when the page is minimised.
+            const hidePlayback = document.querySelectorAll('#speakButton');
+            hidePlayback.forEach(element => {
             element.style.display = 'none';
-        });
-    }
-    // Check if the translated text includes "maximise", "default", or "reset"
-    if (transcript.includes("maximise") || transcript.includes("default") || transcript.includes("reset") || transcript.includes("restore") || transcript.includes("normal") || transcript.includes("original") || transcript.includes("Maximise") || transcript.includes("Default") || transcript.includes("Reset") || transcript.includes("Restore") || transcript.includes("Normal") || transcript.includes("Original")) {
-        // Add code here to restore the CSS properties to their default values
-        // You can reset the font size, padding, margin, and display properties of elements
-        
-        // Example: Restore font size of all elements to default
-        const elements = document.querySelectorAll('*');
-        elements.forEach(element => {
-            element.style.fontSize = '';
-        });
+            });
+            const hideOutput = document.querySelectorAll('#output');
+            hideOutput.forEach(element => {
+            element.style.display = 'none';
+            });
 
-        // Example: Restore padding and margin of specific elements to default
-        const specificElements = document.querySelectorAll('.specific-class');
-        specificElements.forEach(element => {
-            element.style.padding = '';
-            element.style.margin = '';
-        });
+        }
+    
+// Performs the opposite of the above code, reading for certain words and restoring the page to its default state when successful.
+        // List of words that will trigger the page to be restored to it's default size.
+        if (transcript.includes("maximise") || transcript.includes("default") || transcript.includes("reset") || transcript.includes("restore") || transcript.includes("normal") || transcript.includes("increase") || transcript.includes("original") || transcript.includes("Maximise") || transcript.includes("Default") || transcript.includes("Reset") || transcript.includes("Increase") || transcript.includes("Restore") || transcript.includes("Normal") || transcript.includes("Original")) {
+            
+            // Restores the styling of all changed elements back to default
+            const containerElements = document.querySelectorAll('.container');
+            containerElements.forEach(element => {
+                element.style.padding = '20vh';
+                element.style.borderRadius = '30px';
+            });
+            const titleElements = document.querySelectorAll('.title');
+            titleElements.forEach(element => {
+                element.style.fontSize = '36px';
+                element.style.marginBottom = '20';
+            });
+            const buttonElements = document.querySelectorAll('.buttons');
+            buttonElements.forEach(element => {
+                element.style.fontSize = '24px';
+                element.style.padding = '30px 60px';
+            });
+            const outputElements = document.querySelectorAll('.outputText');
+            outputElements.forEach(element => {
+                element.style.fontSize = '12px';
+                element.style.minHeight = '100px';
+                element.style.borderRadius = '5px';
+                element.style.fontSize = '18px';
+            });
 
-        // Example: Show hidden elements
-        const hideElements = document.querySelectorAll('.hide-class');
-        hideElements.forEach(element => {
+            // Makes previously hidden elements reappear.
+            const showPlayback = document.querySelectorAll('#speakButton');
+            showPlayback.forEach(element => {
             element.style.display = '';
-        });
-    }
-};
+            });
+            const showOutput = document.querySelectorAll('#output');
+           showOutput.forEach(element => {
+            element.style.display = '';
+            });
+        }       
+    };
 
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// figure out how to make the page more compact using voice commands
-// figure out how to reset the page to default using voice commands
-// figure out how to change the text size of the page using voice commands
-// figure out how to change the font of the page using voice commands
-
 // try changing the position of the ui elements using voice commands
 // try changing the color of the ui elements using voice commands
 // try changing the size of the ui elements using voice commands
