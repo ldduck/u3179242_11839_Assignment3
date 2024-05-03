@@ -1,10 +1,12 @@
 
+// Global variables that set up functions later in the code.
 // This allows the user to speak into their microphone and have the text translation returned on screen.
 const StartButton = document.getElementById('StartButton');
 const outputDiv = document.getElementById('output');
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
 voices = window.speechSynthesis.getVoices();
 recognition.lang = 'en-AU';
+theVoice = 'Microsoft Catherine - English (Australia)';
 
 // These call the speakButton Id, making the TTS accessible.
 const speakButton = document.getElementById('speakButton');
@@ -29,18 +31,19 @@ StartButton.addEventListener ('click', () => {
     recognition.start();
 });
 
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 // This allows the text to be spoken back to the user. Additionally, it controls what the voice sounds like.
 function speakText() {
     const text = outputDiv.textContent;
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'en-AU' && voice.name === 'Microsoft Catherine - English (Australia)');
+    utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'en-AU' && voice.name === theVoice );
     window.speechSynthesis.speak(utterance);
 }
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// Feature 1: Minimise & Maximise Page
+
+
+// Core event listener that listens for the user's voice input and triggers the relevant functions.
 recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
     outputDiv.textContent = transcript; 
@@ -140,20 +143,10 @@ recognition.onresult = (event) => {
 
     // This allows the text to be spoken back to the user. Additionally, it controls what the voice sounds like.
     if (transcript.includes("man") || transcript.includes("male") || transcript.includes("masculine") || transcript.includes("Man") || transcript.includes("Male") || transcript.includes("Masculine")) {
-        const text = outputDiv.textContent;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'en-AU' && voice.name === 'Microsoft James - English (Australia)');
-        window.speechSynthesis.speak(utterance);
+        theVoice = 'Microsoft James - English (Australia)';
+
     } else if (transcript.includes("woman") || transcript.includes("female") || transcript.includes("feminine") || transcript.includes("Woman") || transcript.includes("Female") || transcript.includes("Feminine")) {
-        const text = outputDiv.textContent;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === 'en-AU' && voice.name === 'Microsoft Catherine - English (Australia)');
-        window.speechSynthesis.speak(utterance);
+        theVoice =  'Microsoft Catherine - English (Australia)';
     }
 
 };
-
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-//todo
-// figure out how to make the voice change be voice controlled
